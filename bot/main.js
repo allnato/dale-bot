@@ -1,4 +1,4 @@
-const client = require('./twitter-connect');
+const client = require('./api/twitter-api');
 
 // Verify Authentication
 client.get('account/verify_credentials',{})

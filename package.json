@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "An experimental Twitter Bot",
   "main": "main.js",
+  "scripts": {
+    "start": "node bot/main.js"
+  },
   "repository": "https://github.com/Ollen/dale-bot",
   "author": "Allendale S. Nato",
   "license": "MIT",
