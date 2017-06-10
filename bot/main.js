@@ -9,11 +9,3 @@ client.get('account/verify_credentials',{})
         logger.error('Authentication failed: Invalid credentials.', {error: err});
         process.exit(1);
     });
-
-var tweet = 'Hello world \uD83C\uDF0F \nThis is posted via the twitter API.';
-client.post('statuses/update', {status: tweet})
-    .then(() => {
-        logger.info('Added a new tweet');
-    }, err => {
-        logger.error('Error Tweeting', {error: err});
-    });
