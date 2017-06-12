@@ -9,3 +9,18 @@ client.get('account/verify_credentials',{})
         logger.error('Authentication failed: Invalid credentials.', {error: err});
         process.exit(1);
     });
+
+
+
+var tweet = () => {
+    let curDateTime = new Date(Date.now());
+    let message = `This is a scheduled tweet. \n\n${curDateTime}`;
+    client.post('statuses/update', {status: message})
+        .then((res) => {
+            logger.info('Added a new tweet', {tweet: res.text});
+        }, err => {
+            logger.error('Error Tweeting', {error: err});
+        });
+};
+
+setInterval(tweet, 1000*60*3);
