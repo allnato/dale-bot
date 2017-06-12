@@ -39,4 +39,8 @@ jspm_packages
 #eslint
 .eslintrc.js
 
+# Environment File
 .env
+
+# Pictures
+*.jpg
