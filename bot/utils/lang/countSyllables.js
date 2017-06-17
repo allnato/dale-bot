@@ -8,14 +8,14 @@ const Rita = require('rita');
  */
 const countSyllables = message => {
     let res = {};
-    res.phenomes = Rita.getSyllables(message);
+    res.phonemes = Rita.getSyllables(message);
    
-    let syllables = res.phenomes.replace(/ /g, '/');
+    let syllables = res.phonemes.replace(/ /g, '/');
     res.count = syllables.split('/').length;
 
     return res;
 };
 
 
-console.log(countSyllables('To be or not to be'));
+
 module.exports = countSyllables;
