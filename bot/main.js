@@ -2,7 +2,7 @@ const client = require('./api/twitter-api');
 const logger = require('./utils/logger');
 const countSyllables = require('./utils/lang/countSyllables');
 
-const stream = client.stream('user');
+const stream = client.stream('user', {replies: 'all'});
 let screen_name = null;
 
 
@@ -22,16 +22,17 @@ function main() {
     stream.on('data', res => {
         let reply_to_name = res.in_reply_to_screen_name;
         let reply_to_status = res.in_reply_to_status_id;
-        console.log(res);
+
         if (reply_to_name === screen_name && reply_to_status == null) {
-            reply(res.id_str, res.text);        
+            let reply_from = res.user.screen_name;
+            reply(res.id_str,reply_from, res.text);        
         }        
     });
 }
 
-function reply(status_id, text) {
+function reply(status_id, screen_name, text) {
     let syllables = getSyllables(text);
-    let message = `Syllable Count: ${syllables.count}\nPhonemes: ${syllables.phonemes}`;
+    let message = `@${screen_name}\nSyllable Count: ${syllables.count}\nPhonemes: ${syllables.phonemes}`;
 
     let params = {
         in_reply_to_status_id: status_id, 
