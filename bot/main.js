@@ -17,15 +17,14 @@ client.get('account/verify_credentials',{})
         process.exit(1);
     });
 
-
 function main() {
     // Stream Tweets
     stream.on('data', res => {
         let reply_to_name = res.in_reply_to_screen_name;
-        let reply_to_status = res.in_reply_to_status_id_str;
-
-        if (reply_to_name === screen_name &&  reply_to_status == null) {
-            reply(reply_to_status, res.text);        
+        let reply_to_status = res.in_reply_to_status_id;
+        console.log(res);
+        if (reply_to_name === screen_name && reply_to_status == null) {
+            reply(res.id_str, res.text);        
         }        
     });
 }
@@ -34,18 +33,23 @@ function reply(status_id, text) {
     let syllables = getSyllables(text);
     let message = `Syllable Count: ${syllables.count}\nPhonemes: ${syllables.phonemes}`;
 
-    client.post('statuses/update', {status: message, in_reply_to_status_id: status_id})
-    .then(() => {
-        logger.info('Replied to a syllable request');
-    }, err => {
-        logger.error('Error replying to a syllable request', {error: err});
-    });
+    let params = {
+        in_reply_to_status_id: status_id, 
+        status: message
+    };
+
+    client.post('statuses/update', params)
+        .then((res) => {
+            logger.info('Successfully replied to a syllable request', {tweet: res.text});
+        }, err => {
+            logger.error('Error replying to a syllable request', {error: err});
+        });
 }
 
 function getSyllables(text) {
-    let message = text.replace(/@S\+/img, '');
+    var message = text.replace(/@\S+/img, '');
     message = message.replace(/\s+/img, ' ');
-    return countSyllables(message);
+    return countSyllables(message.trim());
 }
 
 
