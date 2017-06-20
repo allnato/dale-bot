@@ -1,8 +1,8 @@
 const Rita = require('rita');
 
 /**
- * countSyllables() returns am object containing
- * the phenomes and syllable count of the string parameter.
+ * countSyllables() returns an object containing
+ * the phonemes and syllable count of the string parameter.
  * @param {String} message 
  * @return {Object} res
  */

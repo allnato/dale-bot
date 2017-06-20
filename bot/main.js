@@ -1,13 +1,17 @@
-const client = require('./api/twitter-api');
+/**
+ * Syllable Counter bot.
+ */
+const twitter = require('./api/twitter-api');
 const logger = require('./utils/logger');
 const countSyllables = require('./utils/lang/countSyllables');
+const filterMentions = require('./utils/twitter/filterMentions');
 
-const stream = client.stream('user', {replies: 'all'});
+// Twitter user stream connection
+const stream = twitter.getUserStream();
+
 let screen_name = null;
-
-
 // Verify Authentication
-client.get('account/verify_credentials',{})
+twitter.verifyCredentials()
     .then((res) => {
         screen_name = res.screen_name;
         logger.info(`Successfully Authenticated as "${screen_name}"`);
@@ -17,21 +21,25 @@ client.get('account/verify_credentials',{})
         process.exit(1);
     });
 
+// Main function
 function main() {
-    // Stream Tweets
+    /** 
+     * Listen reply tweets to return a syllable request.
+     */
     stream.on('data', res => {
         let reply_to_name = res.in_reply_to_screen_name;
         let reply_to_status = res.in_reply_to_status_id;
 
         if (reply_to_name === screen_name && reply_to_status == null) {
             let reply_from = res.user.screen_name;
-            reply(res.id_str,reply_from, res.text);        
+            replySyllables(res.id_str,reply_from, res.text);        
         }        
     });
 }
 
-function reply(status_id, screen_name, text) {
-    let syllables = getSyllables(text);
+function replySyllables(status_id, screen_name, text) {
+    text = filterMentions(text);
+    let syllables = countSyllables(text);
     let message = `@${screen_name}\nSyllable Count: ${syllables.count}\nPhonemes: ${syllables.phonemes}`;
 
     let params = {
@@ -39,19 +47,10 @@ function reply(status_id, screen_name, text) {
         status: message
     };
 
-    client.post('statuses/update', params)
+    twitter.postStatus(params)
         .then((res) => {
             logger.info('Successfully replied to a syllable request', {tweet: res.text});
         }, err => {
             logger.error('Error replying to a syllable request', {error: err});
         });
 }
-
-function getSyllables(text) {
-    var message = text.replace(/@\S+/img, '');
-    message = message.replace(/\s+/img, ' ');
-    return countSyllables(message.trim());
-}
-
-
-

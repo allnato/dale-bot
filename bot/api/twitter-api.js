@@ -8,4 +8,20 @@ const config = require('./../config/config').twitter;
 
 const client  = new Twitter(config);
 
-module.exports = client;
+function getUserStream() {
+    return client.stream('user', {replies: 'all'});
+}
+
+function verifyCredentials() {
+    return client.get('account/verify_credentials',{});
+}
+
+function postStatus(params) {
+    return client.post('statuses/update', params);
+}
+
+module.exports = {
+    getUserStream,
+    verifyCredentials,
+    postStatus
+};

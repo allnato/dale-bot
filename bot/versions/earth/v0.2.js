@@ -1,3 +1,6 @@
+/**
+ * Exploring scheduled tweets
+ */
 const client = require('./api/twitter-api');
 const logger = require('./utils/logger');
 const moment = require('moment-timezone');
