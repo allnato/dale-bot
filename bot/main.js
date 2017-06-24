@@ -3,18 +3,18 @@
  */
 const twitter = require('./api/twitter-api');
 const logger = require('./utils/logger');
-const countSyllables = require('./utils/lang/countSyllables');
-const filterMentions = require('./utils/twitter/filterMentions');
+const syllableRequest = require('./utils/twitter/syllableRequest');
 
 // Twitter user stream connection
 const stream = twitter.getUserStream();
 
-let screen_name = null;
+
+let user = null;
 // Verify Authentication
 twitter.verifyCredentials()
     .then((res) => {
-        screen_name = res.screen_name;
-        logger.info(`Successfully Authenticated as "${screen_name}"`);
+        user = res;
+        logger.info(`Successfully Authenticated as "${user.screen_name}"`);
         main();
     }, err => {
         logger.error('Authentication failed: Invalid credentials.', {error: err});
@@ -30,27 +30,14 @@ function main() {
         let reply_to_name = res.in_reply_to_screen_name;
         let reply_to_status = res.in_reply_to_status_id;
 
-        if (reply_to_name === screen_name && reply_to_status == null) {
+        if (reply_to_name === user.screen_name && reply_to_status == null) {
             let reply_from = res.user.screen_name;
-            replySyllables(res.id_str,reply_from, res.text);        
+            syllableRequest(res.id_str, reply_from, res.text)
+                .then((res) => {
+                    logger.info('Successfully replied to a syllable request.', {tweet: res.text});
+                }, err => {
+                    logger.error('Error replying to a syllable request.', {error: err});
+                });        
         }        
     });
-}
-
-function replySyllables(status_id, screen_name, text) {
-    text = filterMentions(text);
-    let syllables = countSyllables(text);
-    let message = `@${screen_name}\nSyllable Count: ${syllables.count}\nPhonemes: ${syllables.phonemes}`;
-
-    let params = {
-        in_reply_to_status_id: status_id, 
-        status: message
-    };
-
-    twitter.postStatus(params)
-        .then((res) => {
-            logger.info('Successfully replied to a syllable request', {tweet: res.text});
-        }, err => {
-            logger.error('Error replying to a syllable request', {error: err});
-        });
 }
