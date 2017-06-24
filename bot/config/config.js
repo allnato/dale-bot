@@ -12,6 +12,15 @@ const twitter = {
     access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
 };
 
+const reddit = {
+    userAgent: 'dalebot',
+    clientId: process.env.REDDIT_CLIENT_ID,
+    clientSecret: process.env.REDDIT_CLIENT_SECRET,
+    username: process.env.REDDIT_USERNAME,
+    password: process.env.REDDIT_PASSWORD  
+};
+
 module.exports = {
-    twitter
+    twitter,
+    reddit
 };
