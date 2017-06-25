@@ -7,6 +7,11 @@ function verifyCredentials() {
     return client.getMe();
 }
 
+function getTop(subreddit, options={time:'day', limit: 10}) {
+    return client.getTop(subreddit, options);
+}
+
 module.exports = {
-    verifyCredentials
+    verifyCredentials,
+    getTop
 };

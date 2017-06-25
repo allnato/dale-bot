@@ -4,8 +4,9 @@
 const twitter = require('./api/twitter-api');
 const reddit = require('./api/reddit-api');
 const logger = require('./utils/logger');
+const later = require('later');
 const syllableRequest = require('./utils/twitter/syllableRequest');
-
+const fetchTopContents = require('./utils/reddit/fetchTopContents');
 /**
  * Set all API variables to null.
  */
@@ -16,6 +17,7 @@ let redditUser = null;
 /**
  * Verify Credentials for both twitter and reddit.
  * If both authentication are verified, invoke the main() function.
+ * Otherwise, the process will terminate naturally.
  */
 console.log('AUTHENTICATING APIs...');
 Promise.all([twitter.verifyCredentials(), reddit.verifyCredentials()])
@@ -53,4 +55,26 @@ function main() {
                 });        
         }        
     });
+
+    /**
+     * Tweet tailored reddit post every 3 hours GMT +800
+     */
+    let phSched = {
+        schedules: [{h: [1, 4, 7, 10, 13, 16, 19, 22]}] // Every 3 Hours (GMT +800)
+    };
+
+    later.setInterval(() => {
+        fetchTopContents().then(res => {
+            let url = 'www.reddit.com';
+            for (let content of res) {
+                let permalink = url + content.permalink;
+                let twitterStatus = `${content.title}\n${permalink}\nsource: ${content.subreddit_name_prefixed}`;
+                twitter.postStatus({status: twitterStatus}).then(res => {
+                    logger.info('Successfully posted a reddit post.', {tweet: res.text});
+                }).catch(err => {
+                    logger.error('Error posting a reddit post.', {error: err});  
+                });
+            }
+        });
+    }, phSched);
 }
