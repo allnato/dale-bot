@@ -1,5 +1,5 @@
 /**
- * Syllable Counter bot.
+ * Syllable Counter bot and Scheduled Reddit poster.
  */
 const twitter = require('./api/twitter-api');
 const reddit = require('./api/reddit-api');

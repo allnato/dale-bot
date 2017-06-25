@@ -1,5 +1,4 @@
 const getTop = require('./../../api/reddit-api').getTop;
-const postStatus = require('./../../api/twitter-api').postStatus;
 
 const mySubreddits = [
     'nottheonion',
@@ -56,13 +55,5 @@ const fetchTopContents = () => {
 
 };
 
-// fetchTopContents().then(res => {
-//     let url = 'www.reddit.com';
-//     for (let content of res) {
-//         let permalink = url + content.permalink;
-//         let twitterStatus = `${content.title}\n${permalink}\nsource: ${content.subreddit_name_prefixed}`;
-//         postStatus({status: twitterStatus});
-//     }
-// });
 
 module.exports = fetchTopContents;
