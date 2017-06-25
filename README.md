@@ -4,7 +4,7 @@ An experimental twitter bot I built from scratch :robot:
 ## Recent Alpha release [Earth-v0.3.1](https://github.com/Ollen/dale-bot/releases/tag/Earth-v0.3.1)
 ### ✔️ Automated Reddit content poster (New)
 - dale-bot will now post various daily top subreddit contents for every 3 hours (GMT +800).
-- Three random subreddit threads will be chosen by default in a list subreddits handpicked by me. dale-bot will then a random top daily content among the chosen subreddit threads. <br>  
+- Three random subreddit threads will be chosen by default in a list of subreddits handpicked by me. dale-bot will then a randomly pick a top daily content among the chosen subreddit threads. <br>  
 
 
 ### ✔️ Syllable Reply Automation
