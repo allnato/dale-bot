@@ -1,5 +1,6 @@
 # dale-bot
 An experimental twitter bot I built from scratch :robot:  
+#### Visit my bot at [twitter.com/_dalebot](https://twitter.com/_dalebot)
 
 ## Recent Alpha release [Earth-v0.3.1](https://github.com/Ollen/dale-bot/releases/tag/Earth-v0.3.1)
 ### ✔️ Automated Reddit content poster (New)
