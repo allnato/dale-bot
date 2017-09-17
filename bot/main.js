@@ -75,6 +75,10 @@ function main() {
                     logger.error('Error posting a reddit post.', {error: err});  
                 });
             }
+        }).catch(err => {
+            logger.error('Error fetching top reddit contents.', {error: err});
         });
     }, phSched);
+    
+    logger.info('Main function now RUNNING...');
 }

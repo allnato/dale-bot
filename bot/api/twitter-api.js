@@ -3,7 +3,7 @@ const config = require('./../config/config').twitter;
 /**
  * Twitter API connector.
  * 
- * Returns a connection instance of twitter.
+ * Creates a Twitter connection instance and returns Twitter methods. 
  */
 
 const client  = new Twitter(config);

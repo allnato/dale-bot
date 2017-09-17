@@ -33,7 +33,7 @@ function getRandomSubreddit(x = 3) {
     return subredditList;
 }
 
-const fetchTopContents = () => {
+const fetchTopContents = async() => {
     let list = getRandomSubreddit();
     let getTopPromise = [];
     let topContents = [];
@@ -42,17 +42,11 @@ const fetchTopContents = () => {
         getTopPromise.push(getTop(subreddit));
     }
 
-    return new Promise((resolve, reject) => {
-        Promise.all(getTopPromise).then(res => {
-            for (let content of res) {
-                topContents.push(content[getRandomNumber(content.length)]);
-            }
-            resolve(topContents);
-        }).catch(err => {
-            reject(err);
-        });
-    });
-
+    let contentRes = await Promise.all(getTopPromise);
+    for (let content of contentRes) {
+        topContents.push(content[getRandomNumber(content.length)]);
+    }
+    return topContents;
 };
 
 
