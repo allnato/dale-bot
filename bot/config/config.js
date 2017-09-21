@@ -20,7 +20,10 @@ const reddit = {
     password: process.env.REDDIT_PASSWORD  
 };
 
+const darkskyKey = process.env.DARKSKY_KEY;
+
 module.exports = {
     twitter,
-    reddit
+    reddit,
+    darkskyKey
 };
