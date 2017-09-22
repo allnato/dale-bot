@@ -8,7 +8,6 @@ const mySubreddits = [
     'pics',
     'gaming',
     'aww',
-    'dankmemes',
     'programmerhumor',
     'crappydesign',
     'upliftingnews',
