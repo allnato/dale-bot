@@ -6,7 +6,7 @@ const apiBaseURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
  * given address.
  * @param {String} address 
  */
-const getLatLong = async(address) => {
+const getGeocode = async(address) => {
     let url = apiBaseURL + encodeURIComponent(address);
     let jsonRes = await axios.get(url, {responseType: 'json'});
 
@@ -14,17 +14,7 @@ const getLatLong = async(address) => {
         throw new Error('Error: Could not find address');
     }
 
-    // Take the first value.
-    let firstRes = jsonRes.data.results[0];
-    let res = {};
-
-    res.formattedAddress = firstRes.formatted_address;
-    res.longitude = firstRes.geometry.location.lng;
-    res.latitude = firstRes.geometry.location.lat;
-    
-    return res;
+    return jsonRes.data
 };
 
-module.exports = {
-    getLatLong
-};
+module.exports = getGeocode; 

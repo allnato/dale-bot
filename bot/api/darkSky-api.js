@@ -7,16 +7,14 @@ const getForecast = async(lat, long) => {
     let jsonRes = await axios.get(url, {responseType: 'json'});
 
     if (jsonRes.status == 400) {
-        throw new Error(jsonRes.data.error);
+        throw new Error('DarkSky Bad Request: Check API key and Input params.');
     } else if (jsonRes.status == 403) {
         throw new Error('Invalid API Key');
     } else if (jsonRes.status == 200) {
-        return jsonRes.data.currently;
+        return jsonRes.data;
     } else {
         throw new Error('Error connecting to Dark Sky API');
     }
 };
 
-module.exports = {
-    getForecast
-};
+module.exports = getForecast;
