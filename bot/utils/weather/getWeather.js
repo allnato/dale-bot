@@ -14,9 +14,8 @@ const getLatLong = async(address) => {
     };
 }
 
-const getCurrForecast = async(address='Manila, Philippines') => {
+const getCurrForecast = async(address) => {
     let coord = await getLatLong(address);
-    console.log(coord);
     let weather = await getForecast(coord.latitude, coord.longitude);
 
     let forecast = {
@@ -38,9 +37,3 @@ const getCurrForecast = async(address='Manila, Philippines') => {
 module.exports = {
     getCurrForecast
 };
-
-getCurrForecast().then(res => {
-    console.log(res);
-}).catch(err => {
-    console.log(err);
-});
