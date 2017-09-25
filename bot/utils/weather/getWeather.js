@@ -34,6 +34,14 @@ const getCurrForecast = async(address) => {
 
 };
 
+// Debugging purposes
+// getCurrForecast('Manila, Philippines')
+//     .then(res => {
+//         console.log(res);
+//     }).catch(err => {
+//         console.log(err);
+//     });
+
 module.exports = {
     getCurrForecast
 };
