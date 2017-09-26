@@ -83,5 +83,5 @@ function main() {
         });
     }, phSched);
     
-    logger.info('Main function now RUNNING...');
+    logger.info('dale-bot now RUNNING...');
 }
