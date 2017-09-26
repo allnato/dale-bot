@@ -40,6 +40,6 @@ const tweetWeather = async(address='Manila, Philippines') => {
     }
 };
 
-tweetWeather();
+// tweetWeather();
 
 module.exports = tweetWeather;

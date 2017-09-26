@@ -7,6 +7,8 @@ const logger = require('./utils/logger');
 const later = require('later');
 const syllableRequest = require('./utils/twitter/syllableRequest');
 const fetchTopContents = require('./utils/reddit/fetchTopContents');
+const tweetWeather = require('./utils/twitter/tweetWeather');
+
 /**
  * Set all API variables to null.
  */
@@ -64,6 +66,7 @@ function main() {
     };
 
     later.setInterval(() => {
+        tweetWeather();
         fetchTopContents().then(res => {
             let url = 'www.reddit.com';
             for (let content of res) {
