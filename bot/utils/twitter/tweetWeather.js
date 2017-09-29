@@ -7,6 +7,10 @@ const weather = require('./../weather/getWeather');
 const logger = require('./../logger');
 const moment = require('moment-timezone');
 
+/**
+ * Tweets the current weather of the given address.
+ * @param {String} address Address input, default is `Manila, Philippines' 
+ */
 const tweetWeather = async(address='Manila, Philippines') => {
     let curTime = moment.tz('Asia/Manila').format('hh:mm A');
     try {
