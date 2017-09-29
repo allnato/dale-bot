@@ -66,7 +66,10 @@ function main() {
     };
 
     later.setInterval(() => {
+        // Tweet Weather
         tweetWeather();
+        
+        // Fetch Top Contents
         fetchTopContents().then(res => {
             let url = 'www.reddit.com';
             for (let content of res) {
