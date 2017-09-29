@@ -1,7 +1,16 @@
+/**
+ * @module
+ * A DarkSky API that returns the weather result in JSON format.
+ */
 const axios = require('axios');
 const key = require('./../config/config').darkskyKey;
 const apiBaseURL = 'https://api.darksky.net/forecast/' + key;
 
+/**
+ * Returns a Promise containg the JSON result of the darkSky API.
+ * @param {String} lat Latitude  
+ * @param {String} long Longitude
+ */
 const getForecast = async(lat, long) => {
     let url = `${apiBaseURL}/${lat},${long}?units=si`;
     let jsonRes = await axios.get(url, {responseType: 'json'});
